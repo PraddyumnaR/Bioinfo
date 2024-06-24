@@ -6,7 +6,7 @@ output:
 ---
 Load library and set working directory
 ```{r}
-setwd("C:/Users/pradd/Desktop/Research Project/Control_new")
+setwd("Path to directory where counts table file is located")
 library(DESeq2)
 library(ggplot2)
 library(pheatmap)
@@ -14,7 +14,6 @@ library(EnhancedVolcano)
 packageVersion("DESeq2")
 ```
 ```{r}
-setwd("C:/Users/pradd/Desktop/Research Project/Control_new")
 Counts <- read.delim("counts_table.csv", header= TRUE, row.names = 1, sep = ",")
 Counts
 ```
@@ -28,6 +27,7 @@ print("Row and Col positions of NA values")
 which(is.na(Counts))
 ```
 Creation of Counts table:
+for 16 samples where first 8 are control and next 8 are Treated can change depending on no of samples simply by changing it from factor(c("C","C","C","C","C","C","C","C","T","T","T","T","T","T","T","T")) to  factor(c(rep("C",no of control samples),rep("T",no of treated samples)))
 ```{r}
 Counts <- Counts[which(rowSums(Counts) > 50),]
 Counts
