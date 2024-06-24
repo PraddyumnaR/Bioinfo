@@ -6,7 +6,7 @@ This repository contains R language scripts for gene expression analysis and var
 
 ### 1. Differential Gene Expression Analysis
 
-The `DGE_analysis.R` script performs Differential Gene Expression (DGE) analysis using RNA-Seq data. It utilizes R packages such as DESeq2 or edgeR for statistical analysis and identifies genes that are significantly differentially expressed between experimental conditions.
+The `DGE_Analysis.Rmd` script performs Differential Gene Expression (DGE) analysis using RNA-Seq data. It utilizes R packages such as DESeq2 or edgeR for statistical analysis and identifies genes that are significantly differentially expressed between experimental conditions.
 
 #### Requirements
 
@@ -18,7 +18,7 @@ The `DGE_analysis.R` script performs Differential Gene Expression (DGE) analysis
 
 1. Install R and required packages (DESeq2 or edgeR).
 2. Prepare gene count data and experimental metadata.
-3. Run the `DGE_analysis.R` script in RStudio or command line.
+3. Run the `DGE_Analysis.Rmd` script in RStudio or command line.
 
 ### 2. DEG Filtering Based on Log Fold Change
 
@@ -54,7 +54,7 @@ The `variant_annotation_summary.R` script generates a summary of all types of va
 
 ### 4. Gene Symbol Conversion from Ensembl
 
-The `gene_symbol_conversion.R` script converts gene symbols from Ensembl IDs to human-readable gene symbols. It uses annotation databases or APIs to map Ensembl IDs to gene symbols and generates an updated gene symbol file.
+The `gene_symbol_conversion.Rmd` script converts gene symbols from Ensembl IDs to human-readable gene symbols. It uses annotation databases or APIs to map Ensembl IDs to gene symbols and generates an updated gene symbol file.
 
 #### Requirements
 
@@ -67,7 +67,7 @@ The `gene_symbol_conversion.R` script converts gene symbols from Ensembl IDs to 
 1. Install R and required packages (e.g., biomaRt).
 2. Obtain an Ensembl gene ID file.
 3. Modify the script to specify the Ensembl ID column and output gene symbol file path.
-4. Run the `gene_symbol_conversion.R` script in RStudio or command line.
+4. Run the `gene_symbol_conversion.Rmd` script in RStudio or command line.
 
 ## License
 
