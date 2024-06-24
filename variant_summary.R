@@ -1,5 +1,5 @@
 # Read the SNPeff annotated VCF file
-vcf_file <- "merged_filtered200.ann.vcf"
+vcf_file <- "SNPeff.ann.vcf"
 vcf_lines <- readLines(vcf_file)
 
 # Initialize empty vectors to store variant types and gene symbols
