@@ -1,0 +1,132 @@
+---
+title: "DGE analysis"
+output:
+  html_notebook: default
+  pdf_document: default
+---
+Load library and set working directory
+```{r}
+setwd("C:/Users/pradd/Desktop/Research Project/Control_new")
+library(DESeq2)
+library(ggplot2)
+library(pheatmap)
+library(EnhancedVolcano)
+packageVersion("DESeq2")
+```
+```{r}
+setwd("C:/Users/pradd/Desktop/Research Project/Control_new")
+Counts <- read.delim("counts_table.csv", header= TRUE, row.names = 1, sep = ",")
+Counts
+```
+Number of Gene-IDs inside the data:
+```{r}
+nrow(Counts)
+```
+Get the NA's positons in the data:
+```{r}
+print("Row and Col positions of NA values")
+which(is.na(Counts))
+```
+Creation of Counts table:
+```{r}
+Counts <- Counts[which(rowSums(Counts) > 50),]
+Counts
+condition <- factor(c("C","C","C","C","C","C","C","C","T","T","T","T","T","T","T","T"))
+coldata <- data.frame(row.names = colnames(Counts), condition)
+coldata
+```
+DGE
+```{r}
+dds <- DESeqDataSetFromMatrix(countData = Counts, colData = coldata, design = ~condition)
+dds <- DESeq(dds)
+```
+Save normalized read Counts:
+```{r}
+normalized_counts <- counts(dds, normalized = TRUE)
+head(normalized_counts)
+write.csv(normalized_counts, 'normalized_counts.csv')
+```
+```{r}
+res <- results(dds,contrast = c('condition', 'T', 'C'), alpha = 0.05)
+summary(res)
+```
+MA Plot
+```{r}
+plotMA(res, cex=0.7, ylim=c(-10,10))
+abline(h=c(-1,1), col="red", lwd=3)
+resultsNames(dds)
+```
+```{r}
+res2 <- results(dds,contrast = c('condition', 'C', 'T'), alpha = 0.05)
+#MA plot control vs Treatment
+plotMA(res2, cex=0.7, ylim=c(-10,10))
+abline(h=c(-1,1), col="red", lwd=3)
+resultsNames(dds)
+```
+Shrinkage of effect size
+```{r}
+resLFC <- lfcShrink(dds,coef = "condition_T_vs_C", type="apeglm")
+plotMA(resLFC, cex=0.7, ylim=c(-10,10))
+abline(h=c(-1,1), col="red", lwd=3)
+resultsNames(dds)
+```
+Dispersion Plot
+```{r}
+plotDispEsts(dds, main="Dispersion Plot")
+```
+PCA plot
+```{r}
+rld <- rlogTransformation(dds,blind = FALSE)
+head(assay(rld))
+hist(assay(rld))
+PCAA<- plotPCA(rld, intgroup='condition')
+PCAA +ggtitle('PCA Plot')
+#+geom_text(aes(label=name),size=5)
+```
+Enhanced Volcano Plot
+```{r fig.height=10}
+EnhancedVolcano(res,
+                lab=rownames(res),
+                x='log2FoldChange',
+                y='pvalue',
+                title = 'Treatment vs. Control',
+                pCutoff = 10e-4,
+                FCcutoff= 0.5,
+                pointSize = 3.0,
+                labSize = 5.0)
+```
+Heatmap generation
+
+SampleDists <- dist(+(assay(rld)))
+library("RColorBrewer")
+SampleDistMatrix <- as.matrix(SampleDists)
+colnames(SampleDistMatrix)
+colors<- colorRampPalette(rev(brewer.pal(9,"Blues")) )(255)
+pheatmap(SampleDistMatrix, 
+         clustering_distance_rows = SampleDists,
+         clustering_distance_cols = SampleDists,
+         col=colors)
+         
+top-genes<- res[order(res$padj), ][1:10] 
+class(top-genes) 
+top-genes         
+
+```{r}
+heatmap(assay(dds), scale = "row", dendrogram="row")
+```
+```
+
+```
+```{r}
+setwd("C:/Users/pradd/Desktop/Research Project/Control_new")
+write.csv(res, file="Deseq3C result")
+```
+
+
+
+
+
+
+
+
+
