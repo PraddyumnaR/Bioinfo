@@ -54,7 +54,7 @@ The `variant_annotation_summary.R` script generates a summary of all types of va
 
 ### 4. Gene Symbol Conversion from Ensembl
 
-The `gene_symbol_conversion.Rmd` script converts gene symbols from Ensembl IDs to human-readable gene symbols. It uses annotation databases or APIs to map Ensembl IDs to gene symbols and generates an updated gene symbol file.
+The `Gene_symbol_conversion to ensembl.Rmd` script converts gene symbols from Ensembl IDs to human-readable gene symbols. It uses annotation databases or APIs to map Ensembl IDs to gene symbols and generates an updated gene symbol file.
 
 #### Requirements
 
@@ -67,7 +67,7 @@ The `gene_symbol_conversion.Rmd` script converts gene symbols from Ensembl IDs t
 1. Install R and required packages (e.g., biomaRt).
 2. Obtain an Ensembl gene ID file.
 3. Modify the script to specify the Ensembl ID column and output gene symbol file path.
-4. Run the `gene_symbol_conversion.Rmd` script in RStudio or command line.
+4. Run the `Gene_symbol_conversion to ensembl.Rmd` script in RStudio or command line.
 
 ## License
 
