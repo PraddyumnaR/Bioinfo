@@ -1,0 +1,50 @@
+---
+title: "Gene symbol conversion to Ensembl by bioMart"
+output: html_notebook
+---
+
+Install and load the biomaRt package:
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("biomaRt")
+library(biomaRt)
+```
+
+Connect to the Biomart database:
+```{r}
+ensembl_mouse <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
+
+```
+
+Adjust the function to retrieve gene symbols and NCBI gene IDs for Mus musculus:
+```{r}
+convert_gene_symbols_mouse <- function(gene_symbols, mart) {
+  genes <- getBM(attributes = c("mgi_symbol", "entrezgene_id"), 
+                 filters = "mgi_symbol", 
+                 values = gene_symbols, 
+                 mart = mart)
+  return(genes)
+}
+
+```
+Read your mouse gene symbols from a text file:
+```{r}
+gene_symbols_mouse <- readLines("diff_exp_gene_list.txt")
+
+```
+Use the function convert_gene_symbols_mouse to convert your mouse gene symbols to NCBI gene names or IDs:
+```{r}
+converted_genes_mouse <- convert_gene_symbols_mouse(gene_symbols_mouse, ensembl_mouse)
+
+```
+Save the converted mouse genes to a new text file:
+```{r}
+write.table(converted_genes_mouse, file = "converted_DEG_genes_mouse.txt", sep = "\t", quote = FALSE, row.names = FALSE)
+
+```
+
+
+
+
